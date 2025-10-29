@@ -90,7 +90,7 @@ def postgresql_database_statistic_generator(db_params):
             tables_index_all[full_column_name] = i
             columns_list.append(column_name)
             columns_index[full_column_name] = index
-            columns_index[column_name] = index
+            # columns_index[column_name] = index
             index += 1
 
             cursor.execute(f"SELECT {full_column_name} FROM {table};")
@@ -176,4 +176,5 @@ if __name__ == '__main__':
         # "options": "-c statement_timeout=600000"
     }
     generate_postgresql_database_statistic(db_params)
+
 
