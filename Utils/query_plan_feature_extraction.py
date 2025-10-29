@@ -142,7 +142,7 @@ def str_to_unit_float(s: str) -> float:
     return n / (1 << 64)
 
 def Text_extraction(text, tables_index, tables_index_all, columns_index, attribute_range):
-    enc_column = [0]*(int(len(columns_index)*8))
+    enc_column = [0]*(int(len(columns_index)/2*8))
     enc_table = [0] * len(tables_index)
     predicates = extract_predicates(text)
 
@@ -814,4 +814,5 @@ if __name__ == '__main__':
     dbname = 'stats'
     generate_dataset(dbname)
     # generate_dataset_with_explanation(dbname)
+
 
