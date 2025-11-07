@@ -109,20 +109,9 @@ def train(dbname, reqo_config, k_i, trainset, testset, save_path, query_plans_in
                                                                           query_plans_index_num_i)
         print(f'Fold {k_i} Epoch {epoch + 1}: train_loss: {avg_train_loss}, test_loss: {avg_test_loss}, spearmancorrelation: {cost_estimation_results[-1]}, optimal_runtime_ratio: {robustness_results[11]}')
 
-        # Early stop based on test loss
-        if avg_test_loss < best_test_perf:
-            best_test_perf = avg_test_loss
-            best_model = model.state_dict()
-            best_cost_estimation_results = cost_estimation_results
-            best_robustness_results = robustness_results
-            best_runtime_per_query = runtime_per_query
-            early_stop = 0
-        else:
-            early_stop += 1
-
-        # # Early stop based on optimal runtime ratio
-        # if robustness_results[11] < best_test_perf:
-        #     best_test_perf = robustness_results[11]
+        # # Early stop based on test loss
+        # if avg_test_loss < best_test_perf:
+        #     best_test_perf = avg_test_loss
         #     best_model = model.state_dict()
         #     best_cost_estimation_results = cost_estimation_results
         #     best_robustness_results = robustness_results
@@ -130,6 +119,17 @@ def train(dbname, reqo_config, k_i, trainset, testset, save_path, query_plans_in
         #     early_stop = 0
         # else:
         #     early_stop += 1
+
+        # Early stop based on optimal runtime ratio
+        if robustness_results[11] < best_test_perf:
+            best_test_perf = robustness_results[11]
+            best_model = model.state_dict()
+            best_cost_estimation_results = cost_estimation_results
+            best_robustness_results = robustness_results
+            best_runtime_per_query = runtime_per_query
+            early_stop = 0
+        else:
+            early_stop += 1
 
     cost_estimation_results = best_cost_estimation_results
     robustness_results = best_robustness_results
